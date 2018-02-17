@@ -1,4 +1,4 @@
-CREATE TABLE Balance
+п»їCREATE TABLE Balance
 (	
 	Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
 	GoodsId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Goods(Id),
@@ -100,7 +100,7 @@ AS
 			DECLARE @goodsSum float = @goodsPrice * @goodsCount;
 
 			IF NOT EXISTS (SELECT * FROM Goods WHERE Id = @goodsId)
-				THROW 50000, 'Вы пытаетесь добавить в приход товар, которого нет в таблице Goods. Сначала добавьте его в таблицу Goods', 1;
+				THROW 50000, 'Р’С‹ РїС‹С‚Р°РµС‚РµСЃСЊ РґРѕР±Р°РІРёС‚СЊ РІ РїСЂРёС…РѕРґ С‚РѕРІР°СЂ, РєРѕС‚РѕСЂРѕРіРѕ РЅРµС‚ РІ С‚Р°Р±Р»РёС†Рµ Goods. РЎРЅР°С‡Р°Р»Р° РґРѕР±Р°РІСЊС‚Рµ РµРіРѕ РІ С‚Р°Р±Р»РёС†Сѓ Goods', 1;
 
 			INSERT INTO Income (Id,      Date,  Num,  StorageId,  CurrencyId,  OrganizationId,  StringNum,   GoodsId, Count,   Price,   Sum) 
 			VALUES			   (NEWID(), @date, @num, @storageId, @currencyId, @organizationId, @stringNum, @goodsId, @goodsCount, @goodsPrice, @goodsSum)
@@ -162,7 +162,7 @@ AS
 					DECLARE @goodsCount int = @xml.value('(/outcome/detalization[sql:variable("@counter")]/@goodsCount)[1]', 'int');
 				
 					IF (@balanceGoodsCount - @goodsCount < 0)
-						THROW 50000, 'Вы пытаетесь забрать товара больше, чем есть на складе. Возьмите меньше товара', 1;
+						THROW 50000, 'Р’С‹ РїС‹С‚Р°РµС‚РµСЃСЊ Р·Р°Р±СЂР°С‚СЊ С‚РѕРІР°СЂР° Р±РѕР»СЊС€Рµ, С‡РµРј РµСЃС‚СЊ РЅР° СЃРєР»Р°РґРµ. Р’РѕР·СЊРјРёС‚Рµ РјРµРЅСЊС€Рµ С‚РѕРІР°СЂР°', 1;
 
 					DECLARE @stringNum int = @xml.value('(/outcome/detalization[sql:variable("@counter")]/@stringNum)[1]', 'int');
 					DECLARE @goodsPrice float = (SELECT Price FROM Goods WHERE Id = @goodsId);
@@ -174,7 +174,7 @@ AS
 					UPDATE Balance SET Count = @balanceGoodsCount - @goodsCount, Sum = @balanceGoodsSum - @goodsSum WHERE GoodsId = @goodsId
 				END
 				ELSE
-					THROW 50000, 'Вы пытаетесь забрать товар, которого нет на складе', 1;
+					THROW 50000, 'Р’С‹ РїС‹С‚Р°РµС‚РµСЃСЊ Р·Р°Р±СЂР°С‚СЊ С‚РѕРІР°СЂ, РєРѕС‚РѕСЂРѕРіРѕ РЅРµС‚ РЅР° СЃРєР»Р°РґРµ', 1;
 
 				SET @counter = @counter + 1;
 			END
